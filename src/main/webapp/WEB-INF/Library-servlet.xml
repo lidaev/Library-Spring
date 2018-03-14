@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven/>
+
+    <context:component-scan base-package="com.lib"/>
+    <!--<mvc:resources mapping="/resources/**" location="" />-->
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <context:annotation-config/>
+
+    <!-- Service Implementations -->
+    <bean id="diaryService" class="com.lib.services.impl.BookServiceImpl" />
+    <bean id="userService" class="com.lib.services.impl.UserServiceImpl" />
+
+    <!-- DAO Implementation -->
+    <bean id="diaryDAO" class="com.lib.model.dao.impl.BookDAOImpl">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <bean id="userDAO" class="com.lib.model.dao.impl.UserDAOImpl">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/java_app_servlet" />
+        <property name="username" value="root" />
+        <property name="password" value="123456" />
+    </bean>
+
+</beans>
